@@ -7,9 +7,52 @@ void print_details(void);
 
 int adj[20][20], source[400], destination[400], weight[400], visit[20], parent[20],final_weight[20],count = 0,size;
 
+void swap(int *p, int *q)
+{
+    int temp = *p;
+    *p = *q;
+    *q = temp;
+}
+void krushkal(void)
+{
+    int i = 0;
+    while (!allVisit() && i < count)
+    {
+        if (visit[destination[i]] == 0)
+        {
+            parent[destination[i]] = source[i];
+            visit[source[i]] = 1;
+            visit[destination[i]] = 1;
+            final_weight[destination[i]] = weight[i];
+        }
+        i++;
+    }
+    print_details();
+}
+int allVisit(void)
+{
+    int i;
+    for (i = 0; i < size; i++)
+    {
+        if (visit[i] == 0)
+            return 0;
+    }
+    return 1;
+}
+void print_details(void)
+{
+    int i;
+    printf("\n  Edge  |  Weight\n-----------------\n");
+    for (i = 0; i < size; i++)
+    {
+        if (source[0] != i)
+            printf("  %d - %d |   %d\n", parent[i], i, final_weight[i]);
+    }
+}
+
 int main()
 {
-    int i, j;
+    int i, j,min_weight=0;
     printf("\nEnter the total no of node : ");
     scanf("%d", &size);
 
@@ -29,6 +72,7 @@ int main()
         }
         visit[i] = 0;
         parent[i] = -1;
+        final_weight[i] = 0;
     }
 
     for (i = 0; i < count; i++)
@@ -43,54 +87,15 @@ int main()
             }
         }
     }
-    for (i = 0; i < count; i++)
-        printf("\n%d\t%d\t%d", source[i],destination[i], weight[i]);
+    
 
     krushkal();
+    for (i = 0; i < size;i++)
+        min_weight += final_weight[i];
+    printf("\nMin weight of MST is : %d", min_weight);
     return 0;
 }
-void swap(int *p,int *q)
-{
-    int temp = *p;
-    *p = *q;
-    *q = temp;
-}
-void krushkal(void)
-{
-    int i = 0;
-    while (!allVisit() && i < count)
-    {
-        if(visit[destination[i]]==0)
-        {
-            parent[destination[i]] = source[i];
-            visit[source[i]] = 1;
-            visit[destination[i]] = 1;
-            final_weight[destination[i]] = weight[i];
-        }
-        i++;
-    }
-    print_details();
-}
-int allVisit(void)
-{
-    int i;
-    for (i = 0; i < size;i++)
-    {
-        if(visit[i]==0)
-            return 0;
-    }
-    return 1;
-}
-void print_details(void)
-{
-    int i;
-    printf("\n  Edge  |  Weight\n-----------------\n");
-    for (i = 0; i < size; i++)
-    {
-        if(source[0]!=i)
-            printf("  %d - %d |   %d\n", parent[i], i, final_weight[i]);
-    }
-}
+
 
 /*
 0 7 3 0 0

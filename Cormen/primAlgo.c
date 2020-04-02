@@ -53,7 +53,7 @@ void print_details(void)
 
 int main()
 {
-    int i, j;
+    int i, j,min_weight=0;
     printf("\nEnter the total no of node : ");
     scanf("%d", &size);
 
@@ -67,6 +67,9 @@ int main()
     }
 
     prim();
+    for (i = 1; i < size; i++)
+        min_weight += weight[i];
+    printf("\nMin weight of MST is : %d", min_weight);
     return 0;
 }
 
