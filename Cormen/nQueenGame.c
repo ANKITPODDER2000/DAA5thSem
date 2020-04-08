@@ -1,74 +1,64 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-int absdif(int, int);
-int isPossible(int *, int, int,int);
-int nQueen(int *, int,int );
+int placeQueen(int);
+int issafe(int);
 
+int size, *board;
 
-int nQueen(int *board, int size,int pos)
+int placeQueen(int pos)
 {
+    if(pos>=size)
+        return 1;
     int i;
     for (i = 0; i < size;i++)
     {
-        if (pos == size)
-            return 1;
-        board[pos] = i;
-        if(isPossible(board,size,pos,i))
+        *(board + pos) = i;
+        /*
+        printf("\n%d . Board is : ", pos);
+        for (int i = 0; i < size; i++)
+            printf("%d ", *(board + i));
+        */
+        if(issafe(pos))
         {
-            if(nQueen(board, size,i+1))
+            if(placeQueen(pos+1))
                 return 1;
         }
+        *(board + pos) = -1;
     }
     return 0;
 }
 
-int isPossible(int *board, int size, int row,int col)
+int issafe(int pos)
 {
     int i;
-    printf("%d---%d---%d\n", size, row, col);
-    printf("\nBoard : ");
-    for (i = 0; i < size;i++)
-        printf("%d ", board[i]);
-    for (i = 0; i < size; i++)
+    for (i = 0; i < pos;i++)
     {
-        printf("%d\t%d\n", board[i], col);
-        if ((board[i] == col) || (absdif(board[i], i) == absdif(row, col)))
-        {
-            //printf("%d\t%d\n", board[i], col);
+        if(*(board+i)==*(board+pos))
             return 0;
-        }
+        else if ((abs((i - pos))) == (abs((*(board + i) - *(board + pos)))))
+            return 0;
     }
     return 1;
 }
 
-int absdif(int a,int b)
-{
-    if(a>b)
-        return a - b;
-    return b - a;
-}
-
 int main()
 {
-    int i;
-    int size, *board;
-    printf("\nEnter Total no of rows : ");
+    printf("\nEnter board size : ");
     scanf("%d", &size);
     board = (int *)malloc(sizeof(int) * size);
-    for (i = 0; i < size;i++)
-        board[i] = -1;
-    if(!nQueen(board, size,0))
-    {
-        printf("\nX  ->> ");
-        for (i = 0; i < size;i++)
-            printf("%d ", board[i]);
-    }
+
+    for (int i = 0; i < size;i++)
+        *(board + i) = -1;
+    
+    if(placeQueen(0)!=1)
+        printf("\nNot Possible.");
     else
     {
-        printf("\nX: ");
-        for (i = 0; i < size;i++)
-            printf("%d ", board[i]);
+        printf("\nSolution is : ");
+        for (int i = 0; i < size; i++)
+            printf("%d ", *(board + i) + 1);
     }
     return 0;
 }
