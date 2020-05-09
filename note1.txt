@@ -1,0 +1,128 @@
+>>>Algorithms:
+==============================================
+Informally, an algorithm is any well-defined computational procedure that takes
+some value, or set of values, as input and produces some value, or set of values, as
+output. An algorithm is thus a sequence of computational steps that transform the
+input into the output.
+algorithm is correct if it produces proper output for every input instance.
+
+************************************************************************************
+
+>>>Data structures:
+==============================================
+This book also contains several data structures. A data structure is a way to store
+and organize data in order to facilitate access and modifications. No single data
+structure works well for all purposes, and so it is important to know the strengths
+and limitations of several of them.
+DS is a way to store the data efficiently and effectively.
+
+************************************************************************************
+
+>>>Efficiency
+==============================================
+Different algorithms devised to solve the same problem often differ dramatically in
+their efficiency. These differences can be much more significant than differences
+due to hardware and software.
+As an example, in Chapter 2, we will see two algorithms for sorting. The first,
+known as insertion sort, takes time roughly equal to c1*n^2 to sort n items, where c1
+is a constant that does not depend on n. That is, it takes time roughly proportional
+to n2. The second, merge sort, takes time roughly equal to c2*n*log n, where lg n
+stands for log2 n and c2 is another constant that also does not depend on n. Insertion sort typically has a smaller constant factor than merge sort, so that***c1 < c2***.
+We shall see that the constant factors can have far less of an impact on the running
+time than the dependence on the input size n. Let’s write insertion sort’s running
+time as c1n  n and merge sort’s running time as c2n  lg n. Then we see that where
+insertion sort has a factor of n in its running time, merge sort has a factor of lg n,
+which is much smaller. (For example, when n D 1000, lg n is approximately 10,
+and when n equals one million, lg n is approximately only 20.) Although insertion
+sort usually runs faster than merge sort for small input sizes, once the input size n
+becomes large enough, merge sort’s advantage of lg n vs. n will more than compensate for the difference in constant factors. No matter how much smaller c1 is
+than c2, there will always be a crossover point beyond which merge sort is faster.
+For a concrete example, let us pit a faster computer (computer A) running insertion sort against a slower computer (computer B) running merge sort. They each
+must sort an array of 10 million numbers. (Although 10 million numbers might
+seem like a lot, if the numbers are eight-byte integers, then the input occupies
+about 80 megabytes, which fits in the memory of even an inexpensive laptop computer many times over.) Suppose that computer A executes 10 billion instructions
+per second (faster than any single sequential computer at the time of this writing)
+and computer B executes only 10 million instructions per second, so that computer A is 1000 times faster than computer B in raw computing power. To make
+the difference even more dramatic, suppose that the world’s craftiest programmer
+codes insertion sort in machine language for computer A, and the resulting code
+requires 2n2 instructions to sort n numbers. Suppose further that just an average
+programmer implements merge sort, using a high-level language with an inefficient
+compiler, with the resulting code taking 50n lg n instructions. To sort 10 million
+numbers, computer A takes
+2  .107/2 instructions
+1010 instructions/second D 20,000 seconds (more than 5.5 hours) ;
+while computer B takes
+1.2 Algorithms as a technology 13
+50  107 lg 107 instructions
+107 instructions/second
+ 1163 seconds (less than 20 minutes) :
+By using an algorithm whose running time grows more slowly, even with a poor
+compiler, computer B runs more than 17 times faster than computer A! The advantage of merge sort is even more pronounced when we sort 100 million numbers:
+where insertion sort takes more than 23 days, merge sort takes under four hours.
+In general, as the problem size increases, so does the relative advantage of merge
+sort.
+
+**************************************************************************
+Sorting Algorithm:
+=============================
+INSERTION-SORT.A/
+1 for j = 2 to A:length
+2 	  key  = A[j]
+3     // Insert A[j]  into the sorted sequence 
+4     i = j-1
+5     while i>0 and A[i] > key
+		  A[i+1] = A[i]
+7         i -= 1;
+8     A[i+1] = key
+
+**************************************************************************
+Merge Sort(A,L,R):
+>>{
+>>    if(L<R)
+>>    {
+>>         mid = (L+R)/2;
+>>	       MergeSort(A,L,mid);
+>>	       MergeSort(A,mid+1,R);
+>>         Merge(A,L,mid,R);
+>>    }
+>>}
+
+>> T(n) = 2 * T(n/2) + O(n)
+According master theorm:
+a = 2;
+b = 2;
+log2(base 2)-->1
+f(n)->O(n)->O(n^(log2(base 2)))
+->Time Complexity :   O(n(log2(base 2)) * log(n))
+				    = O(n^1 * log(n)) 
+			    	= O(n*log(n))
+
+**************************************************************************
+Bubble Sort(A):
+1.for i=1 to A.length:
+2.	for j=1 to A.length-i-1:
+3.	  if(A[j]<A[j+1]):
+4.	    swap(A[j],A[j+1])
+
+**************************************************************************
+Big Theta notation:
+0(g(n)) = {f(n) : 0<=C1*g(n)<=f(n)<=C2*g(n) for n >= n0}
+
+Big Oh Notation:
+O(g(n)) = {f(n) : 0 <= f(n) <= C*g(n)} [Upper Bound]
+
+=======================================================================================
+Divide & Conqure Algorith:
+>>Merge Sort->Done
+>>Linear Search(Recurssion):
+===========================================
+T(n) = T(n-1) + O(1)
+def LinearSearch(array,index,size,key):
+	if index>=size:
+		return -1
+	if array[index] = key:
+		return 1
+	return LinearSearch(array,index+1,size,key)
+
+The maximum-subarray problem
+**************************************************************************
