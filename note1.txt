@@ -126,3 +126,31 @@ def LinearSearch(array,index,size,key):
 
 The maximum-subarray problem
 **************************************************************************
+>>See ./Cormen/maxsubArrayBrutforce.c for BrutForce Algorithm. Complexity ->  O(n^2)
+>>See ./Cormen/maxsubArraydc.c for D&C Algorithm. 
+T(n) = 2 * T(n/2) + 0(n) if n>1
+     = 0(1)              if n=1
+
+The Strassen’s Algorithm
+**************************************************************************
+>>General Complexity = O(n^3)
+>>Complexity of Strassen's Algo -> O(n^lg 7) = O(n^lg2.80)
+So , Strassen's algo is better for matrices multipication.
+C <- A * B [
+	A -> n*n;
+	B -> n*n;
+	C -> n*n;
+]
+
+To keep things simple, when we use a divide-and-conquer algorithm to compute
+the matrix product C = A * B, we assume that n is an exact power of 2 in each of
+the n*n matrices. We make this assumption because in each divide step, we will
+divide n*n matrices into four n/2 & n/2 matrices, and by assuming that n is an
+exact power of 2, we are guaranteed that as long as n>=2, the dimension n/2 is an
+integer.
+
+Suppose that we partition each of A, B, and C into four n/2 & n/2 matrices
+C11 = A11 * B11 + A12 * B21
+C12 = A11 * B12 + A12 * B22
+C21 = A21 * B11 + A22 * B21
+C22 = A21 * B12 + A22 * B22
