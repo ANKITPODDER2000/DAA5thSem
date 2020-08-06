@@ -87,5 +87,5 @@ int main()
             printf(" -> %d", counter[slot[i]]+1);
         }
     }
-        return 0;
+    return 0;
 }
