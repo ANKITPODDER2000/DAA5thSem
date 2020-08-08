@@ -9,6 +9,8 @@ float jsp(void)
 	float sell = 0.0;
 	for(int i = 0 ; i < n ; i++)
 	{
+		if(*(time+i) > day)
+			*(time+i) = day;
 		for(int j=*(time+i)-1 ; j>=0 ;j--)
 		{
 			if(*(slot + j) == -1)
@@ -30,17 +32,18 @@ int main()
 
 	profit = (int *)malloc(sizeof(int) * n);
 	time   = (int *)malloc(sizeof(int) * n);
-	slot   = (int *)malloc(sizeof(int) * n);
 
 	for(int i = 0;i < n ;i++)
 	{
 		printf("\nEnter profit & time for the job : ");
 		scanf("%d %d",(profit + i) , (time + i));
-		*(slot + i) = -1;
 	}
 
 	printf("Enter max day : ");
 	scanf("%d",&day);
+	slot   = (int *)malloc(sizeof(int) * day);
+	for(int i=0;i<day;i++)
+		*(slot + i) = -1;
 
 	for(int i=0;i<n;i++)
 	{

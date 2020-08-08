@@ -52,7 +52,7 @@ int main()
 	printf("\nEnter total no of colors : ");
 	scanf("%d",&col);
 
-	if(color_graph(0) == 0)
+	if(!color_graph(0))
 		printf("Not Possible");
 	else{
 		printf("\nColor := ");
@@ -62,3 +62,11 @@ int main()
 
 	return 0;
 }
+
+
+/*
+0 1 0 1
+1 0 1 0
+0 1 0 1
+1 0 1 0
+*/
